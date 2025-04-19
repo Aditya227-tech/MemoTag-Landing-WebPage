@@ -1,0 +1,702 @@
+/* 
+  MemoTag Landing Page - Premium CSS Implementation
+  Features:
+  - Tier 1 Design with refined aesthetics
+  - Smooth animations (on scroll, hover, page transitions)
+  - Clean, human-centered typography and layout
+  - Dark mode toggle implementation
+  - Colorful design approach with careful color harmony
+  - Modified oval-shaped buttons with improved visibility
+*/
+
+/* ============= FONT IMPORTS ============= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ============= RESET & ROOT VARIABLES ============= */
+:root {
+  /* Light Mode Colors */
+  --background: #d3e1d7;
+  --surface: #f1f4f9;
+  --surface-alt: #f1f4f9;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4b5563;
+  --text-tertiary: #6b7280;
+  
+  /* Brand Colors */
+  --indigo-50: #eef2ff;
+  --indigo-100: #e0e7ff;
+  --indigo-600: #4f46e5;
+  --indigo-700: #4338ca;
+  --purple-50: #f5f3ff;
+  --purple-500: #8b5cf6;
+  --purple-900: #4c1d95;
+  --pink-50: #fdf2f8;
+  --pink-500: #ec4899;
+  --pink-900: #831843;
+  --green-100: #d1fae5;
+  --green-500: #10b981;
+  --green-600: #059669;
+  --red-100: #fee2e2;
+  --red-600: #dc2626;
+  --amber-100: #fef3c7;
+  --amber-600: #d97706;
+  --blue-100: #dbeafe;
+  --blue-600: #2563eb;
+  
+  /* UI Elements */
+  --border: rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  
+  /* Animation Timings */
+  --transition-fast: 0.2s;
+  --transition-medium: 0.3s;
+  --transition-slow: 0.5s;
+  
+  /* Z-Index Layers */
+  --z-navbar: 100;
+  --z-modal: 1000;
+  
+  /* Button Colors */
+  --button-bg: #ffffff;
+  --button-text: #4f46e5;
+  --button-border: #4f46e5;
+  --button-hover-bg: #f5f7ff;
+  --button-hover-text: #4338ca;
+  --button-hover-border: #4338ca;
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+  --background: #121212;
+  --surface: #1e1e1e;
+  --surface-alt: #252525;
+  --text-primary: #f1f1f1;
+  --text-secondary: #d1d5db;
+  --text-tertiary: #9ca3af;
+  --border: rgba(255, 255, 255, 0.1);
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  
+  /* Button Colors - Dark Mode */
+  --button-bg: #2a2a2a;
+  --button-text: #a5b4fc;
+  --button-border: #4f46e5;
+  --button-hover-bg: #333333;
+  --button-hover-text: #c7d2fe;
+  --button-hover-border: #6366f1;
+}
+
+/* ============= BASE STYLES ============= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Account for fixed header */
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background-color var(--transition-medium), color var(--transition-medium);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--indigo-600);
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--indigo-700);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============= LAYOUT COMPONENTS ============= */
+
+/* Navigation */
+nav {
+  transition: background-color var(--transition-medium), box-shadow var(--transition-medium);
+  box-shadow: var(--shadow-sm);
+}
+
+nav .h-8 {
+  height: 2rem;
+}
+
+nav .w-8 {
+  width: 2rem;
+}
+
+nav .h-5, nav .w-5 {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+/* Theme Toggle Button */
+button[onClick*="setDarkMode"] {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+button[onClick*="setDarkMode"]:hover {
+  transform: rotate(15deg);
+  background-color: var(--border);
+}
+
+/* Hero Section */
+section:first-of-type {
+  background: linear-gradient(170deg, var(--surface) 0%, var(--background) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+section:first-of-type::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 50%;
+  height: 70%;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+section:first-of-type::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.08) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* Brain Icon Animation */
+.brain-icon-container {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.brain-icon-container::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.3) 0%, rgba(79, 70, 229, 0.1) 50%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 3s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  50% { transform: scale(1.05); opacity: 0.4; }
+  100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+/* CTA Buttons - MODIFIED FOR OVAL SHAPE */
+a[href="#contact"], a[href="#solution"], button, .button, form button[type="submit"] {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-medium);
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+  border-radius: 50px !important; /* Oval shape */
+  background-color: var(--button-bg) !important;
+  color: var(--button-text) !important;
+  border: 2px solid var(--button-border) !important;
+  padding: 0.5rem 1.5rem !important;
+  font-weight: 600 !important;
+  display: inline-block;
+  text-align: center;
+}
+
+a[href="#contact"]:hover, button:hover, .button:hover, form button[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  background-color: var(--button-hover-bg) !important;
+  color: var(--button-hover-text) !important;
+  border-color: var(--button-hover-border) !important;
+}
+
+a[href="#contact"]::after, button::after, .button::after, form button[type="submit"]::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 0;
+  padding-bottom: 120%;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.6s, opacity 0.6s;
+}
+
+a[href="#contact"]:active::after, button:active::after, .button:active::after, form button[type="submit"]:active::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition: 0s;
+}
+
+/* Dark mode button adjustments */
+[data-theme="dark"] a[href="#contact"], 
+[data-theme="dark"] a[href="#solution"], 
+[data-theme="dark"] button, 
+[data-theme="dark"] .button, 
+[data-theme="dark"] form button[type="submit"] {
+  box-shadow: 0 0 5px rgba(79, 70, 229, 0.3);
+}
+
+/* Primary button - when we need a filled version */
+.button-primary, a.button-primary, button.button-primary {
+  background-color: var(--indigo-600) !important;
+  color: white !important;
+  border-color: var(--indigo-600) !important;
+}
+
+.button-primary:hover, a.button-primary:hover, button.button-primary:hover {
+  background-color: var(--indigo-700) !important;
+  border-color: var(--indigo-700) !important;
+}
+
+/* Override any conflicting background styles */
+.bg-indigo-600 {
+  background-color: transparent !important; /* Reset any blue backgrounds */
+}
+
+/* Section Backgrounds */
+.bg-gray-50 {
+  background-color: var(--surface);
+}
+
+.bg-indigo-50 {
+  background-color: var(--indigo-50);
+}
+
+[data-theme="dark"] .bg-gray-50 {
+  background-color: var(--surface-alt);
+}
+
+[data-theme="dark"] .bg-indigo-50 {
+  background-color: rgba(79, 70, 229, 0.05);
+}
+
+/* ============= COMPONENT STYLES ============= */
+
+/* Cards & Info Boxes */
+.bg-white, .bg-gray-700, .bg-gray-800 {
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+  box-shadow: var(--shadow-md);
+}
+
+div[class*="bg-white"], div[class*="bg-gray-700"], div[class*="bg-gray-800"] {
+  border-radius: 1rem;
+  overflow: hidden;
+  transform: translateY(0);
+}
+
+div[class*="bg-white"]:hover, div[class*="bg-gray-700"]:hover, div[class*="bg-gray-800"]:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Solution Steps */
+div[class*="bg-indigo-50"], div[class*="bg-purple-50"], div[class*="bg-pink-50"] {
+  border-radius: 1rem;
+  transition: all var(--transition-medium);
+  box-shadow: var(--shadow-sm);
+}
+
+div[class*="bg-indigo-50"]:hover, div[class*="bg-purple-50"]:hover, div[class*="bg-pink-50"]:hover {
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] div[class*="bg-indigo-900"], [data-theme="dark"] div[class*="bg-purple-900"], [data-theme="dark"] div[class*="bg-pink-900"] {
+  background-color: rgba(79, 70, 229, 0.1);
+  box-shadow: 0 0 20px rgba(79, 70, 229, 0.1);
+}
+
+/* Timeline Circle and Line */
+.absolute.top-0.bottom-0.left-1\/2 {
+  width: 2px !important;
+  background: linear-gradient(to bottom, 
+    var(--indigo-600) 0%, 
+    var(--purple-500) 50%, 
+    var(--pink-500) 100%
+  ) !important;
+  opacity: 0.3;
+}
+
+.h-16.w-16.rounded-full {
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 0 4px var(--background);
+}
+
+/* Feature Icons */
+.h-12.w-12.rounded-full {
+  transition: transform var(--transition-medium);
+}
+
+div:hover > .h-12.w-12.rounded-full {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Form Elements */
+input[type="email"] {
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  border-radius: 50px; /* This creates the oval shape */
+  padding: 0.5rem 1.5rem; /* Add some padding for better appearance */
+}
+
+input[type="email"]:focus {
+  outline: none;
+  border-color: var(--indigo-600);
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* Testimonial */
+div.mt-16.bg-white, div.mt-16.bg-gray-800 {
+  position: relative;
+}
+
+div.mt-16.bg-white::before, div.mt-16.bg-gray-800::before {
+  content: '"';
+  position: absolute;
+  top: 1rem;
+  left: 2rem;
+  font-size: 5rem;
+  font-family: Georgia, serif;
+  line-height: 0;
+  color: rgba(79, 70, 229, 0.1);
+}
+
+/* Footer Links */
+footer a {
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+footer a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--indigo-600);
+  transition: width var(--transition-medium);
+}
+
+footer a:hover::after {
+  width: 100%;
+}
+
+/* ============= ANIMATIONS ============= */
+
+/* Page Load Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Apply animations to elements */
+.hero-title {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.hero-description {
+  animation: fadeInUp 0.8s ease 0.2s forwards;
+  opacity: 0;
+}
+
+.hero-cta {
+  animation: fadeInUp 0.8s ease 0.4s forwards;
+  opacity: 0;
+}
+
+/* Scroll Animations */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Page Transitions */
+.page-transition-enter {
+  opacity: 0;
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+/* ============= RESPONSIVE STYLES ============= */
+@media (max-width: 768px) {
+  section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  .grid-cols-1 {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Stack items vertically on mobile */
+  .md\:flex {
+    flex-direction: column;
+  }
+  
+  .md\:w-1\/2 {
+    width: 100%;
+    padding: 0 !important;
+  }
+  
+  /* Center timeline */
+  .absolute.top-0.bottom-0.left-1\/2 {
+    left: 2rem !important;
+    transform: none !important;
+  }
+  
+  /* Footer layout */
+  footer .max-w-6xl {
+    text-align: center;
+  }
+  
+  footer .flex {
+    flex-direction: column;
+  }
+  
+  footer .space-x-6 {
+    margin-top: 1rem;
+  }
+  
+  /* Make buttons wider on mobile */
+  a[href="#contact"], a[href="#solution"], button, .button, form button[type="submit"] {
+    padding: 0.5rem 2rem !important;
+    width: 100%;
+    max-width: 300px;
+    margin: 0.5rem auto;
+  }
+}
+
+/* ============= UTILITY CLASSES ============= */
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(90deg, var(--indigo-600), var(--purple-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Stats counters animation */
+.counter {
+  display: inline-block;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.counter:hover {
+  transform: scale(1.1);
+}
+
+/* Dynamic color utility */
+.text-indigo-600 {
+  color: var(--indigo-600);
+}
+
+.text-purple-600, .text-purple-400 {
+  color: var(--purple-500);
+}
+
+.text-pink-600, .text-pink-400 {
+  color: var(--pink-500);
+}
+
+.text-green-500 {
+  color: var(--green-500);
+}
+
+/* Override all button styles to ensure visibility */
+button, .button, input[type="button"], input[type="submit"] {
+  border-radius: 50px !important;
+  border: 2px solid var(--button-border) !important;
+  background-color: var(--button-bg) !important;
+  color: var(--button-text) !important;
+  padding: 0.5rem 1.5rem !important;
+  font-weight: 600 !important;
+}
+
+/* Border colors */
+.border-indigo-500 {
+  border-color: var(--indigo-600);
+}
+
+.border-purple-500 {
+  border-color: var(--purple-500);
+}
+
+.border-pink-500 {
+  border-color: var(--pink-500);
+}
+
+/* Background colors */
+.bg-indigo-100 {
+  background-color: var(--indigo-100);
+}
+
+.bg-purple-100 {
+  background-color: var(--purple-50);
+}
+
+.bg-pink-100 {
+  background-color: var(--pink-50);
+}
+
+.bg-red-100 {
+  background-color: var(--red-100);
+}
+
+.bg-amber-100 {
+  background-color: var(--amber-100);
+}
+
+.bg-blue-100 {
+  background-color: var(--blue-100);
+}
+
+.bg-green-100 {
+  background-color: var(--green-100);
+}
+
+/* Dark theme background colors */
+[data-theme="dark"] .bg-indigo-900 {
+  background-color: rgba(79, 70, 229, 0.2);
+}
+
+[data-theme="dark"] .bg-purple-900 {
+  background-color: rgba(139, 92, 246, 0.2);
+}
+
+[data-theme="dark"] .bg-pink-900 {
+  background-color: rgba(236, 72, 153, 0.2);
+}
+
+[data-theme="dark"] .bg-red-900 {
+  background-color: rgba(220, 38, 38, 0.2);
+}
+
+[data-theme="dark"] .bg-amber-900 {
+  background-color: rgba(217, 119, 6, 0.2);
+}
+
+[data-theme="dark"] .bg-blue-900 {
+  background-color: rgba(37, 99, 235, 0.2);
+}
+
+/* Support JavaScript animations */
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* SVG & Icon styles */
+svg {
+  transition: transform var(--transition-fast);
+}
+
+a:hover svg, button:hover svg {
+  transform: scale(1.1);
+}
